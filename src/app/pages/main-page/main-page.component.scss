@@ -1,0 +1,45 @@
+:host {
+  .container {
+    padding: 0 75px 50px 75px;
+    position: relative;
+
+    .header {
+      height: 110px;
+      padding-top: 50px;
+      padding-bottom: 10px;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #FFFFFF;
+
+      .results {
+        margin-top: 40px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 19.5px;
+        color: #363636;
+      }
+      .divider {
+        height: 1px;
+        width: 100%;
+        margin-top: 5px;
+        background-color: #EAEAEA;
+      }
+
+      &.search_active {
+        height: 175.5px;
+      }
+
+    }
+
+    .news-tiles {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 35px;
+      gap: 45px;
+      flex-wrap: wrap;
+    }
+  }
+}

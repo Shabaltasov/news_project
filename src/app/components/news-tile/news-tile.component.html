@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <img class="news-img" [src]="img" alt="news-img">
+  <div class="info">
+    <div class="date-info">
+      <img src="assets/icons/calendar.svg" alt="calendar-icon"><span class="date">{{date | dateFormat}}</span>
+    </div>
+    <div class="title-container">
+      <h2 class="title" [innerHTML]="highlightedTitle"></h2>
+    </div>
+    <p class="summary" [innerHTML]="highlightedSummary"></p>
+    <div class="read-more" (click)="redirectToDetailPage()">
+      <p>Read More</p>
+      <img src="assets/icons/arrow.svg" alt="arrow">
+    </div>
+  </div>
+</div>

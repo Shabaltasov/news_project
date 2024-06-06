@@ -1,0 +1,18 @@
+<div class="container">
+  @if (loading) {
+  }
+  @else {
+  <div class="header">
+  <img class="news-img" [src]="article?.image_url" alt="news-img">
+</div>
+<div class="content">
+  <h2>{{ article?.title }}</h2>
+    <p>{{ article?.summary }}</p>
+  </div>
+  <div class="footer" (click)="redirectToMainPage()">
+    <img src="assets/icons/arrow.svg" alt="arrow">
+    <p>Back to homepage</p>
+  </div>
+  }
+</div>
+
