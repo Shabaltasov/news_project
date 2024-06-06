@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from "@angular/router";
 import { ContentService } from "../../services/content.service";
+import { Article } from "../../pages/main-page/main-page.component";
 
 @Component({
   selector: 'app-news-tile',
@@ -9,13 +10,8 @@ import { ContentService } from "../../services/content.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsTileComponent implements OnInit, OnChanges {
-  @Input() date!: string;
-  @Input() title!: string;
-  @Input() summary!: string;
-  @Input() img!: string;
   @Input() keywords: string[] = [];
-  @Input() content!: string;
-  @Input() id!: string;
+  @Input() article!: Article;
 
   public truncatedTitle: string = '';
   public truncatedSummary: string = '';
@@ -41,17 +37,16 @@ export class NewsTileComponent implements OnInit, OnChanges {
   }
 
   public async redirectToDetailPage() {
-    console.log(this.id);
-    this.contentService.setContent(this.id)
+    this.contentService.setContent(this.article.id)
 
     await this.router.navigate(['/detail-page']);
   }
 
   private truncateSummary() {
-    if (this.summary.length > 100) {
-      this.truncatedSummary = this.summary.substring(0, 100) + '...';
+    if (this.article.summary.length > 100) {
+      this.truncatedSummary = this.article.summary.substring(0, 100) + '...';
     } else {
-      this.truncatedSummary = this.summary;
+      this.truncatedSummary = this.article.summary;
     }
   }
 
@@ -74,6 +69,6 @@ export class NewsTileComponent implements OnInit, OnChanges {
     const maxLines = 2;
     const maxLength = maxCharsPerLine * maxLines;
 
-    this.truncatedTitle = this.title.length > maxLength ? this.title.substring(0, maxLength) + '...' : this.title;
+    this.truncatedTitle = this.article.title.length > maxLength ? this.article.title.substring(0, maxLength) + '...' : this.article.title;
   }
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GetApiService } from "../../services/get-api.service";
+import { Subscription } from "rxjs";
 
 export interface Article {
   id: string;
@@ -9,25 +10,34 @@ export interface Article {
   image_url: string;
 }
 
+export interface ApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Article[];
+}
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss']
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit, OnDestroy {
   public articles: Article[] = [];
   public filteredArticles: Article[] = [];
 
   public searchKeywords: string[] = [];
   public searchActive = false;
 
+  private articleSubscription!: Subscription;
+
   constructor(
     private getApiService: GetApiService,
   ) { }
 
   public ngOnInit() {
-    this.getApiService.getArticles().subscribe((data: any) => {
-      this.articles = data.results.map((article: any) => ({
+    this.articleSubscription = this.getApiService.getArticles().subscribe((data: ApiResponse) => {
+      this.articles = data.results.map((article: Article) => ({
         id: article.id,
         published_at: article.published_at,
         title: article.title,
@@ -50,6 +60,12 @@ export class MainPageComponent {
     } else {
       this.searchActive = false;
       this.filteredArticles = [...this.articles];
+    }
+  }
+
+  public ngOnDestroy() {
+    if (this.articleSubscription) {
+      this.articleSubscription.unsubscribe();
     }
   }
 }

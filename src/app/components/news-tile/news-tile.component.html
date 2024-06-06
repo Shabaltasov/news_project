@@ -1,8 +1,8 @@
 <div class="wrapper">
-  <img class="news-img" [src]="img" alt="news-img">
+  <img class="news-img" [src]="article.image_url" alt="news-img">
   <div class="info">
     <div class="date-info">
-      <img src="assets/icons/calendar.svg" alt="calendar-icon"><span class="date">{{date | dateFormat}}</span>
+      <img src="assets/icons/calendar.svg" alt="calendar-icon"><span class="date">{{article.published_at | dateFormat}}</span>
     </div>
     <div class="title-container">
       <h2 class="title" [innerHTML]="highlightedTitle"></h2>

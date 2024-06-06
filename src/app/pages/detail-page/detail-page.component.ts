@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ContentService } from "../../services/content.service";
 import { GetApiService } from "../../services/get-api.service";
 import { Article } from "../main-page/main-page.component";
 import { loremIpsum } from "lorem-ipsum";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-detail-page',
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss']
 })
-export class DetailPageComponent implements OnInit {
+export class DetailPageComponent implements OnInit, OnDestroy {
   public article!: Article;
   public articleId!: string;
   public loading = true;
+
+  private articleSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,9 +38,14 @@ export class DetailPageComponent implements OnInit {
     await this.router.navigate(['/main-page']);
   }
 
+  public ngOnDestroy() {
+    if (this.articleSubscription) {
+      this.articleSubscription.unsubscribe();
+    }
+  }
+
   private loadArticle(id: string) {
-    this.getApiService.getArticleById(id).subscribe((data: any) => {
-      console.log('data', data);
+   this.articleSubscription = this.getApiService.getArticleById(id).subscribe((data: Article) => {
       this.article = {
         id: data.id,
         published_at: data.published_at,

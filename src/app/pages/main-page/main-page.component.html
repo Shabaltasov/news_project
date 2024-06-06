@@ -2,20 +2,16 @@
   <div class="header" [class.search_active]="searchActive">
     <app-searchbar (searchInputEvent)="filterArticles($event)"></app-searchbar>
     @if (searchActive) {
-    <p class="results">Results: {{filteredArticles.length}}</p>
-    <div class="divider"></div>
+      <p class="results">Results: {{filteredArticles.length}}</p>
+      <div class="divider"></div>
     }
   </div>
   <div class="news-tiles">
     @for (article of filteredArticles; track article) {
-    <app-news-tile
-    [date]=article.published_at
-    [title]=article.title
-    [summary]=article.summary
-    [img]=article.image_url
-    [id]=article.id
-    [keywords]="searchKeywords"
-    ></app-news-tile>
+      <app-news-tile
+        [article]=article
+        [keywords]="searchKeywords"
+      ></app-news-tile>
     }
   </div>
 </div>
